@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Year 3 Baseline Assessment — Maths & English</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&family=Fraunces:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #FBF8F3;
+  --bg-card: #FFFFFF;
+  --bg-soft: #F2EFE8;
+  --ink: #2D2A26;
+  --ink-soft: #5C5750;
+  --accent: #2F7A7A;
+  --accent-soft: #DFEFEE;
+  --success: #5BA962;
+  --warning: #D89A38;
+  --danger: #C4543C;
+  --line: #E5E0D6;
+  --shadow-sm: 0 2px 6px rgba(45, 42, 38, 0.05);
+  --shadow-md: 0 6px 20px rgba(45, 42, 38, 0.08);
+  --shadow-lg: 0 14px 40px rgba(45, 42, 38, 0.10);
+  --radius: 14px;
+  --radius-lg: 20px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  font-family: 'Lexend', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 18px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+h1, h2, h3 { font-family: 'Fraunces', Georgia, serif; line-height: 1.2; }
+h1 { font-size: 2.4rem; font-weight: 700; }
+h2 { font-size: 1.6rem; font-weight: 600; }
+h3 { font-size: 1.25rem; font-weight: 600; }
+
+#app {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 24px 20px 48px;
+}
+
+.screen { display: none; animation: fadein 0.35s ease; }
+.screen.active { display: block; }
+@keyframes fadein { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+.card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 36px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--line);
+}
+
+.card.center { text-align: center; }
+
+.eyebrow {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+p { margin-bottom: 14px; color: var(--ink-soft); }
+p strong { color: var(--ink); font-weight: 600; }
+
+.hero-emoji { font-size: 3.5rem; margin-bottom: 12px; display: block; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  font-size: 1rem;
+  font-family: inherit;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.18s ease, background 0.18s ease;
+  box-shadow: var(--shadow-sm);
+}
+.btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); background: #266565; }
+.btn:active { transform: translateY(0); }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+.btn.ghost { background: transparent; color: var(--accent); border: 2px solid var(--accent); box-shadow: none; }
+.btn.ghost:hover { background: var(--accent-soft); }
+.btn.large { padding: 18px 36px; font-size: 1.1rem; }
+
+input[type="text"], input[type="number"], textarea {
+  font-family: inherit;
+  font-size: 1.05rem;
+  padding: 14px 16px;
+  border: 2px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg-card);
+  color: var(--ink);
+  width: 100%;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+input[type="text"]:focus, input[type="number"]:focus, textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+textarea { resize: vertical; min-height: 120px; line-height: 1.6; }
+
+.field-label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--ink);
+  font-size: 0.95rem;
+}
+
+/* Welcome / setup */
+.setup-form { max-width: 480px; margin: 28px auto 0; }
+.setup-form .form-row { margin-bottom: 18px; text-align: left; }
+.btn-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 28px; }
+
+/* Header during assessment */
+#assessment-header {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 14px 20px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--line);
+  position: sticky;
+  top: 12px;
+  z-index: 10;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.header-block { display: flex; flex-direction: column; gap: 2px; }
+.header-block .label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-soft); font-weight: 600; }
+.header-block .value { font-size: 1.05rem; font-weight: 600; color: var(--ink); font-family: 'Fraunces', serif; }
+
+#timer-display { font-feature-settings: "tnum"; }
+#timer-display.warning { color: var(--warning); }
+#timer-display.danger { color: var(--danger); animation: pulse 1s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+
+.progress-track {
+  width: 100%;
+  height: 6px;
+  background: var(--bg-soft);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), #4FA8A8);
+  border-radius: 999px;
+  transition: width 0.4s ease;
+  width: 0%;
+}
+
+/* Question card */
+.question-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--line);
+}
+
+.section-tag {
+  display: inline-block;
+  background: var(--accent-soft);
+  color: var(--accent);
+  padding: 5px 14px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.question-number {
+  font-family: 'Fraunces', serif;
+  color: var(--ink-soft);
+  font-size: 1rem;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.question-text {
+  font-size: 1.25rem;
+  color: var(--ink);
+  margin-bottom: 24px;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.question-text em {
+  font-style: italic;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* MCQ options */
+.options { display: flex; flex-direction: column; gap: 10px; }
+.option {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 18px;
+  background: var(--bg-card);
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-size: 1rem;
+  text-align: left;
+}
+.option:hover { background: var(--bg-soft); border-color: var(--accent-soft); }
+.option.selected { background: var(--accent-soft); border-color: var(--accent); }
+.option-letter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: var(--bg-soft);
+  border-radius: 50%;
+  font-weight: 600;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+  color: var(--ink-soft);
+}
+.option.selected .option-letter { background: var(--accent); color: white; }
+
+.short-answer-wrap { display: flex; flex-direction: column; gap: 8px; }
+.helper-text { font-size: 0.88rem; color: var(--ink-soft); margin-top: 4px; }
+
+/* Reading passage */
+.reading-passage {
+  background: var(--bg-soft);
+  padding: 24px 28px;
+  border-radius: 14px;
+  border-left: 4px solid var(--accent);
+  margin-bottom: 24px;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+.reading-passage h4 {
+  font-family: 'Fraunces', serif;
+  font-size: 1.2rem;
+  color: var(--ink);
+  margin-bottom: 12px;
+  font-weight: 600;
+  font-style: italic;
+}
+.reading-passage p { margin-bottom: 12px; color: var(--ink); }
+
+/* Reading start screen */
+.read-prompt-card {
+  background: var(--accent-soft);
+  border-left: 4px solid var(--accent);
+  padding: 22px 26px;
+  border-radius: 14px;
+  margin-bottom: 24px;
+}
+.read-prompt-card p { color: var(--ink); margin-bottom: 8px; }
+
+/* Visual elements */
+.fraction-visual { display: flex; justify-content: center; margin-bottom: 24px; }
+.shape-visual { display: flex; justify-content: center; margin-bottom: 24px; }
+
+/* Footer / nav */
+.question-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 28px;
+  gap: 12px;
+}
+
+/* Pause screen */
+.pause-card {
+  text-align: center;
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 56px 36px;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--line);
+}
+
+/* Completion / results */
+.summary-stat {
+  background: var(--bg-soft);
+  padding: 20px 24px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.summary-stat .stat-label { font-size: 0.85rem; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
+.summary-stat .stat-value { font-size: 1.6rem; font-weight: 600; font-family: 'Fraunces', serif; color: var(--ink); }
+.summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin: 24px 0 32px; }
+
+.sticker {
+  display: inline-block;
+  font-size: 5rem;
+  margin-bottom: 16px;
+  animation: bounce 1s ease;
+}
+@keyframes bounce {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  30% { transform: scale(1.15) rotate(-5deg); }
+  60% { transform: scale(0.95) rotate(3deg); }
+}
+
+/* Practice question banner */
+.practice-banner {
+  background: linear-gradient(135deg, #F4DBA0, #E8C26F);
+  color: #6F4E14;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 0.92rem;
+  letter-spacing: 0.02em;
+}
+
+/* Saved indicator */
+.save-indicator {
+  font-size: 0.82rem;
+  color: var(--success);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.save-indicator.visible { opacity: 1; }
+.save-indicator::before {
+  content: "✓";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  background: var(--success);
+  color: white;
+  border-radius: 50%;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  html, body { font-size: 16px; }
+  h1 { font-size: 1.8rem; }
+  .card, .question-card { padding: 22px; }
+  #assessment-header { flex-direction: column; align-items: flex-start; }
+  .question-text { font-size: 1.1rem; }
+}
+
+/* Print styles for results */
+@media print {
+  .no-print { display: none !important; }
+  body { background: white; }
+  .card, .question-card, .pause-card { box-shadow: none; border: 1px solid #ccc; }
+}
+</style>
+</head>
+<body>
+
+<div id="app">
+
+  <!-- WELCOME SCREEN -->
+  <div id="welcome-screen" class="screen active">
+    <div class="card center">
+      <span class="hero-emoji">📚</span>
+      <div class="eyebrow">Year 3 Baseline Assessment</div>
+      <h1>Welcome!</h1>
+      <p style="max-width: 540px; margin: 16px auto 8px;">This assessment will check what you have learnt in Maths and English so far this year. It takes about <strong>45 minutes</strong> in total.</p>
+      <p style="max-width: 540px; margin: 0 auto;">Just do your best — there is nothing to worry about.</p>
+
+      <div class="setup-form">
+        <div class="form-row">
+          <label class="field-label" for="student-name">Your name</label>
+          <input type="text" id="student-name" placeholder="e.g. Alex Johnson" autocomplete="off">
+        </div>
+        <div class="form-row">
+          <label class="field-label" for="student-class">Class or group <span style="color: var(--ink-soft); font-weight: 400;">(optional)</span></label>
+          <input type="text" id="student-class" placeholder="e.g. Year 3 Blue" autocomplete="off">
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn large" onclick="goToPractice()">Start →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRACTICE SCREEN -->
+  <div id="practice-screen" class="screen">
+    <div class="card">
+      <div class="practice-banner">⭐ Practice Question — this one is just to try out the test. It does not count!</div>
+      <div class="section-tag">Practice</div>
+      <h2>Let's try a quick example</h2>
+      <p style="margin-top: 12px;">In the test, you'll see questions like the one below. Try answering it now to see how it works.</p>
+
+      <div class="question-card" style="margin-top: 20px;">
+        <div class="question-text">What is <strong>2 + 3</strong>?</div>
+        <div class="options" id="practice-options">
+          <button class="option" data-value="0" onclick="selectPracticeOption(this)"><span class="option-letter">A</span><span>4</span></button>
+          <button class="option" data-value="1" onclick="selectPracticeOption(this)"><span class="option-letter">B</span><span>5</span></button>
+          <button class="option" data-value="2" onclick="selectPracticeOption(this)"><span class="option-letter">C</span><span>6</span></button>
+          <button class="option" data-value="3" onclick="selectPracticeOption(this)"><span class="option-letter">D</span><span>7</span></button>
+        </div>
+        <div id="practice-feedback" style="margin-top: 16px; min-height: 24px;"></div>
+      </div>
+
+      <p style="margin-top: 18px;">Tap an option to select it. When you're ready, you can press <strong>Next</strong> to move on. You can also change your answer before moving on.</p>
+
+      <div class="btn-row">
+        <button class="btn large" onclick="goToInstructions()">I'm ready →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- INSTRUCTIONS SCREEN -->
+  <div id="instructions-screen" class="screen">
+    <div class="card">
+      <div class="eyebrow">Before we begin</div>
+      <h2>How this assessment works</h2>
+
+      <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 14px;">
+        <div style="display: flex; gap: 14px; align-items: flex-start;">
+          <span style="font-size: 1.6rem;">⏱️</span>
+          <div><strong>You have 45 minutes.</strong> A timer at the top will show how much time is left.</div>
+        </div>
+        <div style="display: flex; gap: 14px; align-items: flex-start;">
+          <span style="font-size: 1.6rem;">📝</span>
+          <div><strong>26 questions</strong> in total — Maths first (15 questions), then English (11 questions).</div>
+        </div>
+        <div style="display: flex; gap: 14px; align-items: flex-start;">
+          <span style="font-size: 1.6rem;">↪️</span>
+          <div>You can <strong>go back</strong> to change earlier answers if you have time at the end.</div>
+        </div>
+        <div style="display: flex; gap: 14px; align-items: flex-start;">
+          <span style="font-size: 1.6rem;">💾</span>
+          <div>Your answers are <strong>saved automatically</strong>. Don't worry if your computer slows down.</div>
+        </div>
+        <div style="display: flex; gap: 14px; align-items: flex-start;">
+          <span style="font-size: 1.6rem;">📜</span>
+          <div>If you don't know an answer, you can <strong>skip it</strong> and try again later.</div>
+        </div>
+        <div style="display: flex; gap: 14px; align-items: flex-start;">
+          <span style="font-size: 1.6rem;">🌟</span>
+          <div>Just <strong>try your best</strong> — that's all we ask!</div>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn large" onclick="startAssessment()">Begin the assessment →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ASSESSMENT SCREEN -->
+  <div id="assessment-screen" class="screen">
+    <div id="assessment-header">
+      <div class="header-block">
+        <span class="label">Question</span>
+        <span class="value"><span id="current-q-num">1</span> of 26</span>
+      </div>
+      <div class="header-block">
+        <span class="label">Section</span>
+        <span class="value" id="current-section">Maths · Number Fluency</span>
+      </div>
+      <div class="header-block">
+        <span class="label">Time left</span>
+        <span class="value" id="timer-display">45:00</span>
+      </div>
+    </div>
+
+    <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+
+    <div id="question-area"></div>
+
+    <div class="question-nav">
+      <button class="btn ghost" id="prev-btn" onclick="previousQuestion()">← Previous</button>
+      <span class="save-indicator" id="save-indicator">Saved</span>
+      <button class="btn" id="next-btn" onclick="nextQuestion()">Next →</button>
+    </div>
+  </div>
+
+  <!-- PAUSE SCREEN (between Maths and English) -->
+  <div id="pause-screen" class="screen">
+    <div class="pause-card">
+      <span class="hero-emoji">🌿</span>
+      <div class="eyebrow">Halfway there</div>
+      <h1>Great work!</h1>
+      <p style="max-width: 500px; margin: 16px auto;">You've finished the Maths section. Take a moment to breathe — when you're ready, the English section will begin.</p>
+      <p style="max-width: 500px; margin: 0 auto 24px;"><em>The timer is still running, so when you're ready, press the button below.</em></p>
+      <div class="btn-row">
+        <button class="btn large" onclick="resumeFromPause()">I'm ready for English →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPLETION SCREEN -->
+  <div id="completion-screen" class="screen">
+    <div class="card center">
+      <span class="sticker">🌟</span>
+      <div class="eyebrow">All done</div>
+      <h1>Wonderful work!</h1>
+      <p style="max-width: 540px; margin: 16px auto 0;">You have finished the assessment. Your responses have been saved.</p>
+      <p style="max-width: 540px; margin: 8px auto 0;">Please show this screen to your teacher.</p>
+
+      <div class="summary-grid">
+        <div class="summary-stat">
+          <span class="stat-label">Time taken</span>
+          <span class="stat-value" id="summary-time">—</span>
+        </div>
+        <div class="summary-stat">
+          <span class="stat-label">Questions answered</span>
+          <span class="stat-value" id="summary-answered">—</span>
+        </div>
+        <div class="summary-stat">
+          <span class="stat-label">Auto-marked score</span>
+          <span class="stat-value" id="summary-score">—</span>
+        </div>
+      </div>
+
+      <div class="btn-row no-print">
+        <button class="btn" onclick="downloadResults()">⬇ Download Results (JSON)</button>
+        <button class="btn ghost" onclick="downloadResultsCSV()">⬇ Download as CSV</button>
+        <button class="btn ghost" onclick="showResults()">View Detailed Results</button>
+      </div>
+    </div>
+
+    <div id="detailed-results" style="display: none; margin-top: 24px;"></div>
+  </div>
+
+</div>
+
+<script>
+// ============================================================================
+// QUESTION DATA — Year 3 Baseline Assessment
+// ============================================================================
+
+const QUESTIONS = [
+  // ============ MATHS — SECTION A: NUMBER FLUENCY ============
+  {
+    id: 1, section: 'Maths · Number Fluency', sectionShort: 'maths-fluency', subject: 'maths',
+    type: 'mcq',
+    text: 'What is the value of the digit <strong>4</strong> in the number <strong>347</strong>?',
+    options: ['4', '40', '400', '4,000'],
+    correct: 1
+  },
+  {
+    id: 2, section: 'Maths · Number Fluency', sectionShort: 'maths-fluency', subject: 'maths',
+    type: 'short',
+    text: 'What is <strong>256 + 30</strong>?',
+    accept: ['286'], correct: '286'
+  },
+  {
+    id: 3, section: 'Maths · Number Fluency', sectionShort: 'maths-fluency', subject: 'maths',
+    type: 'short',
+    text: 'What is <strong>473 − 8</strong>?',
+    accept: ['465'], correct: '465'
+  },
+  {
+    id: 4, section: 'Maths · Number Fluency', sectionShort: 'maths-fluency', subject: 'maths',
+    type: 'mcq',
+    text: 'What is <strong>7 × 4</strong>?',
+    options: ['24', '28', '32', '21'],
+    correct: 1
+  },
+  {
+    id: 5, section: 'Maths · Number Fluency', sectionShort: 'maths-fluency', subject: 'maths',
+    type: 'short',
+    text: 'What is <strong>32 ÷ 8</strong>?',
+    accept: ['4'], correct: '4'
+  },
+
+  // ============ MATHS — SECTION B: FRACTIONS ============
+  {
+    id: 6, section: 'Maths · Fractions', sectionShort: 'maths-fractions', subject: 'maths',
+    type: 'mcq',
+    text: 'What fraction of the circle is shaded?',
+    visual: 'fraction-quarter',
+    options: ['1/2', '3/4', '1/4', '1/3'],
+    correct: 2
+  },
+  {
+    id: 7, section: 'Maths · Fractions', sectionShort: 'maths-fractions', subject: 'maths',
+    type: 'mcq',
+    text: 'Which fraction is <strong>larger</strong>?',
+    options: ['1/4', '1/6'],
+    correct: 0
+  },
+  {
+    id: 8, section: 'Maths · Fractions', sectionShort: 'maths-fractions', subject: 'maths',
+    type: 'short',
+    text: 'Fill in the <strong>two</strong> missing numbers in this sequence:<br><br><span style="font-size: 1.4rem; letter-spacing: 0.05em;">1/10, &nbsp; 2/10, &nbsp; ___, &nbsp; 4/10, &nbsp; ___</span>',
+    helper: 'Type both fractions, separated by a comma. For example: 5/10, 7/10',
+    accept: ['3/10, 5/10', '3/10,5/10'], correct: '3/10, 5/10'
+  },
+  {
+    id: 9, section: 'Maths · Fractions', sectionShort: 'maths-fractions', subject: 'maths',
+    type: 'short',
+    text: 'Fill in the missing number:<br><br><span style="font-size: 1.4rem;">1/2 = ___ / 4</span>',
+    helper: 'Just type the missing number.',
+    accept: ['2'], correct: '2'
+  },
+  {
+    id: 10, section: 'Maths · Fractions', sectionShort: 'maths-fractions', subject: 'maths',
+    type: 'short',
+    text: 'Mia has <strong>24 stickers</strong>. She gives <strong>1/3</strong> of them to her friend.<br><br>How many stickers does Mia give away?',
+    accept: ['8'], correct: '8'
+  },
+
+  // ============ MATHS — SECTION C: MEASUREMENT ============
+  {
+    id: 11, section: 'Maths · Measurement', sectionShort: 'maths-measure', subject: 'maths',
+    type: 'short',
+    text: 'A bag of apples weighs <strong>1 kg and 200 g</strong>.<br><br>What is the total weight in <strong>grams</strong>?',
+    helper: 'Type just the number.',
+    accept: ['1200', '1,200'], correct: '1200'
+  },
+  {
+    id: 12, section: 'Maths · Measurement', sectionShort: 'maths-measure', subject: 'maths',
+    type: 'short',
+    text: 'Look at this rectangle. What is the <strong>perimeter</strong>?',
+    visual: 'rectangle-5x3',
+    helper: 'Type the answer in cm. For example: 12',
+    accept: ['16'], correct: '16'
+  },
+
+  // ============ MATHS — SECTION D: WORD PROBLEMS & WRITTEN METHODS ============
+  {
+    id: 13, section: 'Maths · Word Problems', sectionShort: 'maths-words', subject: 'maths',
+    type: 'short',
+    text: 'Tom has <strong>135 football cards</strong>. He gets <strong>47 more</strong> for his birthday.<br><br>How many cards does he have <strong>altogether</strong>?',
+    accept: ['182'], correct: '182'
+  },
+  {
+    id: 14, section: 'Maths · Word Problems', sectionShort: 'maths-words', subject: 'maths',
+    type: 'short',
+    text: 'A baker bakes <strong>4 trays</strong> of cookies. Each tray has <strong>8 cookies</strong>.<br><br>How many cookies are there <strong>altogether</strong>?',
+    accept: ['32'], correct: '32'
+  },
+  {
+    id: 15, section: 'Maths · Written Methods', sectionShort: 'maths-method', subject: 'maths',
+    type: 'short',
+    text: 'Use the <strong>column method</strong> to work out:<br><br><span style="font-size: 1.6rem; font-family: Fraunces, serif;">456 + 287</span>',
+    helper: 'You can use scrap paper to set up your columns. Type your final answer below.',
+    accept: ['743'], correct: '743'
+  },
+
+  // ============ ENGLISH — SECTION E: READING (with reading time capture) ============
+  {
+    id: 16, section: 'English · Reading', sectionShort: 'english-reading', subject: 'english',
+    type: 'reading-passage-mcq',
+    text: 'Where did Maya\'s kite disappear?',
+    options: ['Behind the old oak tree', 'Behind the school building', 'Over the fence', 'Into the river'],
+    correct: 1,
+    showPassage: true
+  },
+  {
+    id: 17, section: 'English · Reading', sectionShort: 'english-reading', subject: 'english',
+    type: 'open',
+    text: 'How do you think Maya felt when the kite string snapped?<br><br>Use <strong>evidence from the passage</strong> to support your answer.',
+    helper: 'Write 1 or 2 sentences. Try to include a feeling word and a detail from the story.',
+    rubric: 'inference', maxMarks: 3,
+    showPassage: true
+  },
+  {
+    id: 18, section: 'English · Reading', sectionShort: 'english-reading', subject: 'english',
+    type: 'mcq',
+    text: 'In the passage, what does the word <em>"helplessly"</em> tell us about how Maya felt?',
+    options: [
+      'She was angry at the wind',
+      'She could do nothing to stop what was happening',
+      'She was happy her kite was flying so high',
+      'She wanted help from a friend'
+    ],
+    correct: 1,
+    showPassage: true
+  },
+  {
+    id: 19, section: 'English · Reading', sectionShort: 'english-reading', subject: 'english',
+    type: 'open',
+    text: 'At the end of the passage, Mr Okafor appears holding something <strong>red</strong>. What do you think happens next?<br><br>Give <strong>one reason</strong> for your answer.',
+    helper: 'Write 1 or 2 sentences.',
+    rubric: 'prediction', maxMarks: 3,
+    showPassage: true
+  },
+
+  // ============ ENGLISH — SECTION F: GRAMMAR ============
+  {
+    id: 20, section: 'English · Grammar', sectionShort: 'english-grammar', subject: 'english',
+    type: 'mcq',
+    text: 'Which sentence uses inverted commas <strong>correctly</strong>?',
+    options: [
+      '"Come in, said the teacher."',
+      '"Come in," said the teacher.',
+      'Come in, "said the teacher."',
+      'Come in said the teacher.'
+    ],
+    correct: 1
+  },
+  {
+    id: 21, section: 'English · Grammar', sectionShort: 'english-grammar', subject: 'english',
+    type: 'mcq',
+    text: 'Choose the best word to complete this sentence:<br><br><em>"She wore her coat _______ it was cold outside."</em>',
+    options: ['although', 'because', 'before', 'until'],
+    correct: 1
+  },
+  {
+    id: 22, section: 'English · Grammar', sectionShort: 'english-grammar', subject: 'english',
+    type: 'mcq',
+    text: 'Which sentence is written in the <strong>present perfect</strong> tense?',
+    options: [
+      'She went to the market.',
+      'She goes to the market.',
+      'She has gone to the market.',
+      'She will go to the market.'
+    ],
+    correct: 2
+  },
+
+  // ============ ENGLISH — SECTION G: SPELLING ============
+  {
+    id: 23, section: 'English · Spelling', sectionShort: 'english-spelling', subject: 'english',
+    type: 'mcq',
+    text: 'Choose the <strong>correct spelling</strong>:',
+    options: ['dissapear', 'disappear', 'disapear', 'disappeare'],
+    correct: 1
+  },
+  {
+    id: 24, section: 'English · Spelling', sectionShort: 'english-spelling', subject: 'english',
+    type: 'mcq',
+    text: 'Choose the correct word to complete the sentence:<br><br><em>"I could not tell _______ it was going to rain."</em>',
+    options: ['weather', 'whether'],
+    correct: 1
+  },
+  {
+    id: 25, section: 'English · Spelling', sectionShort: 'english-spelling', subject: 'english',
+    type: 'short',
+    text: 'Add the correct prefix to the word below to make it mean <strong>"not possible"</strong>:<br><br><span style="font-size: 1.4rem;">_____ possible</span>',
+    helper: 'Type just the prefix (the small part you add to the start of the word).',
+    accept: ['im', 'im-'], correct: 'im'
+  },
+
+  // ============ ENGLISH — SECTION H: WRITING TASK ============
+  {
+    id: 26, section: 'English · Writing', sectionShort: 'english-writing', subject: 'english',
+    type: 'writing',
+    text: 'Continue this story in <strong>3 to 4 sentences</strong>:<br><br><em style="font-size: 1.1rem; display: block; padding: 16px; background: var(--bg-soft); border-radius: 10px; margin-top: 12px; border-left: 3px solid var(--accent);">"The old wooden door creaked open slowly. Inside, Kofi saw something that made his heart leap..."</em>',
+    helper: 'Try to use at least one joining word (such as <strong>because</strong>, <strong>when</strong>, or <strong>although</strong>). Use interesting describing words. Check your punctuation when you finish.',
+    rubric: 'writing', maxMarks: 10
+  }
+];
+
+// ============================================================================
+// READING PASSAGE
+// ============================================================================
+const READING_PASSAGE = `
+<h4>The Lost Kite</h4>
+<p>Maya ran across the field, her red kite dancing high above her. Suddenly, the wind changed direction and the kite string snapped. Maya watched helplessly as her kite sailed over the old oak tree and disappeared behind the school building.</p>
+<p>"Oh no!" she cried, her eyes filling with tears. She had spent three whole weeks saving her pocket money to buy that kite.</p>
+<p>Just then, her neighbour Mr Okafor appeared at the gate, holding something red and smiling broadly. "I believe this belongs to you," he said kindly.</p>
+`;
+
+// ============================================================================
+// VISUAL SVGs
+// ============================================================================
+const VISUALS = {
+  'fraction-quarter': `
+    <div class="fraction-visual">
+      <svg width="180" height="180" viewBox="0 0 180 180">
+        <circle cx="90" cy="90" r="80" fill="#FFFFFF" stroke="#2D2A26" stroke-width="2"/>
+        <path d="M 90 90 L 90 10 A 80 80 0 0 1 170 90 Z" fill="#2F7A7A" opacity="0.85"/>
+        <line x1="90" y1="10" x2="90" y2="170" stroke="#2D2A26" stroke-width="2"/>
+        <line x1="10" y1="90" x2="170" y2="90" stroke="#2D2A26" stroke-width="2"/>
+      </svg>
+    </div>
+  `,
+  'rectangle-5x3': `
+    <div class="shape-visual">
+      <svg width="280" height="200" viewBox="0 0 280 200">
+        <rect x="40" y="50" width="200" height="120" fill="#DFEFEE" stroke="#2D2A26" stroke-width="2.5"/>
+        <text x="140" y="42" text-anchor="middle" font-family="Fraunces, serif" font-size="18" fill="#2D2A26" font-weight="600">5 cm</text>
+        <text x="20" y="115" text-anchor="middle" font-family="Fraunces, serif" font-size="18" fill="#2D2A26" font-weight="600" transform="rotate(-90 20 115)">3 cm</text>
+        <text x="140" y="190" text-anchor="middle" font-family="Fraunces, serif" font-size="18" fill="#2D2A26" font-weight="600">5 cm</text>
+        <text x="262" y="115" text-anchor="middle" font-family="Fraunces, serif" font-size="18" fill="#2D2A26" font-weight="600" transform="rotate(90 262 115)">3 cm</text>
+      </svg>
+    </div>
+  `
+};
+
+// ============================================================================
+// STATE & STORAGE
+// ============================================================================
+const STATE = {
+  studentName: '',
+  studentClass: '',
+  startedAt: null,
+  finishedAt: null,
+  pausedAt: null,
+  currentIndex: 0,
+  responses: {},      // { qId: { answer, timestamp, timeSpent, changes } }
+  questionStartTime: null,
+  questionTimes: {},  // { qId: total time spent }
+  answerChanges: {},  // { qId: number of times changed }
+  readingTime: null,  // ms spent on reading screen
+  readingStartTime: null,
+  totalSeconds: 45 * 60,
+  remainingSeconds: 45 * 60,
+  timerInterval: null,
+  hasShownPause: false,
+  hasShownReading: false
+};
+
+const STORAGE_KEY = 'year3-baseline-assessment';
+
+function saveState() {
+  try {
+    const toSave = {
+      studentName: STATE.studentName,
+      studentClass: STATE.studentClass,
+      startedAt: STATE.startedAt,
+      finishedAt: STATE.finishedAt,
+      currentIndex: STATE.currentIndex,
+      responses: STATE.responses,
+      questionTimes: STATE.questionTimes,
+      answerChanges: STATE.answerChanges,
+      readingTime: STATE.readingTime,
+      remainingSeconds: STATE.remainingSeconds
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(toSave));
+    showSaved();
+  } catch (e) {
+    console.warn('Could not save to localStorage:', e);
+  }
+}
+
+function showSaved() {
+  const ind = document.getElementById('save-indicator');
+  if (!ind) return;
+  ind.classList.add('visible');
+  clearTimeout(showSaved._t);
+  showSaved._t = setTimeout(() => ind.classList.remove('visible'), 1400);
+}
+
+// ============================================================================
+// NAVIGATION FLOW
+// ============================================================================
+function show(screenId) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(screenId).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function goToPractice() {
+  const name = document.getElementById('student-name').value.trim();
+  if (!name) {
+    alert('Please enter your name to begin.');
+    document.getElementById('student-name').focus();
+    return;
+  }
+  STATE.studentName = name;
+  STATE.studentClass = document.getElementById('student-class').value.trim();
+  show('practice-screen');
+}
+
+function selectPracticeOption(el) {
+  document.querySelectorAll('#practice-options .option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  const fb = document.getElementById('practice-feedback');
+  if (el.dataset.value === '1') {
+    fb.innerHTML = '<span style="color: var(--success); font-weight: 600;">✓ Great! That\'s correct.</span>';
+  } else {
+    fb.innerHTML = '<span style="color: var(--ink-soft);">Hmm — try again. The answer is 5 (2 + 3 = 5).</span>';
+  }
+}
+
+function goToInstructions() { show('instructions-screen'); }
+
+function startAssessment() {
+  STATE.startedAt = new Date().toISOString();
+  STATE.currentIndex = 0;
+  STATE.questionStartTime = Date.now();
+  startTimer();
+  show('assessment-screen');
+  renderQuestion();
+}
+
+// ============================================================================
+// TIMER
+// ============================================================================
+function startTimer() {
+  if (STATE.timerInterval) clearInterval(STATE.timerInterval);
+  updateTimerDisplay();
+  STATE.timerInterval = setInterval(() => {
+    STATE.remainingSeconds--;
+    updateTimerDisplay();
+    if (STATE.remainingSeconds <= 0) {
+      clearInterval(STATE.timerInterval);
+      forceFinish('Time is up!');
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const el = document.getElementById('timer-display');
+  if (!el) return;
+  const m = Math.floor(STATE.remainingSeconds / 60);
+  const s = STATE.remainingSeconds % 60;
+  el.textContent = `${m}:${s.toString().padStart(2, '0')}`;
+  el.classList.toggle('warning', STATE.remainingSeconds <= 300 && STATE.remainingSeconds > 60);
+  el.classList.toggle('danger', STATE.remainingSeconds <= 60);
+}
+
+// ============================================================================
+// QUESTION RENDERING
+// ============================================================================
+function renderQuestion() {
+  const q = QUESTIONS[STATE.currentIndex];
+  if (!q) { finishAssessment(); return; }
+
+  // Section transition: Maths → English
+  const prevQ = STATE.currentIndex > 0 ? QUESTIONS[STATE.currentIndex - 1] : null;
+  if (prevQ && prevQ.subject === 'maths' && q.subject === 'english' && !STATE.hasShownPause) {
+    STATE.hasShownPause = true;
+    saveState();
+    show('pause-screen');
+    return;
+  }
+
+  // First reading question — show reading prompt
+  if (q.showPassage && !STATE.hasShownReading) {
+    STATE.hasShownReading = true;
+    showReadingPrompt();
+    return;
+  }
+
+  STATE.questionStartTime = Date.now();
+  document.getElementById('current-q-num').textContent = q.id;
+  document.getElementById('current-section').textContent = q.section;
+  document.getElementById('progress-fill').style.width = `${(STATE.currentIndex / QUESTIONS.length) * 100}%`;
+
+  let html = `<div class="question-card">`;
+  html += `<div class="section-tag">${q.section}</div>`;
+  html += `<div class="question-number">Question ${q.id} of ${QUESTIONS.length}</div>`;
+
+  // Show passage if applicable
+  if (q.showPassage) {
+    html += `<div class="reading-passage">${READING_PASSAGE}</div>`;
+  }
+
+  html += `<div class="question-text">${q.text}</div>`;
+
+  if (q.visual && VISUALS[q.visual]) {
+    html += VISUALS[q.visual];
+  }
+
+  // Render input
+  const existing = STATE.responses[q.id];
+  if (q.type === 'mcq' || q.type === 'reading-passage-mcq') {
+    html += `<div class="options">`;
+    q.options.forEach((opt, i) => {
+      const letter = String.fromCharCode(65 + i);
+      const sel = existing && existing.answer === i ? ' selected' : '';
+      html += `<button class="option${sel}" onclick="selectOption(${i})"><span class="option-letter">${letter}</span><span>${opt}</span></button>`;
+    });
+    html += `</div>`;
+  } else if (q.type === 'short') {
+    const val = existing ? escapeHtml(existing.answer || '') : '';
+    html += `<div class="short-answer-wrap">`;
+    html += `<input type="text" id="short-input" value="${val}" placeholder="Type your answer here" autocomplete="off" oninput="recordShortAnswer(this.value)">`;
+    if (q.helper) html += `<div class="helper-text">${q.helper}</div>`;
+    html += `</div>`;
+  } else if (q.type === 'open') {
+    const val = existing ? escapeHtml(existing.answer || '') : '';
+    html += `<div class="short-answer-wrap">`;
+    html += `<textarea id="open-input" placeholder="Write your answer here..." oninput="recordShortAnswer(this.value)">${val}</textarea>`;
+    if (q.helper) html += `<div class="helper-text">${q.helper}</div>`;
+    html += `</div>`;
+  } else if (q.type === 'writing') {
+    const val = existing ? escapeHtml(existing.answer || '') : '';
+    html += `<div class="short-answer-wrap">`;
+    html += `<textarea id="open-input" placeholder="Write your story continuation here..." style="min-height: 200px;" oninput="recordShortAnswer(this.value)">${val}</textarea>`;
+    if (q.helper) html += `<div class="helper-text">${q.helper}</div>`;
+    html += `</div>`;
+  }
+
+  html += `</div>`;
+  document.getElementById('question-area').innerHTML = html;
+
+  // Update button states
+  document.getElementById('prev-btn').style.display = STATE.currentIndex === 0 ? 'none' : 'inline-flex';
+  document.getElementById('next-btn').textContent = STATE.currentIndex === QUESTIONS.length - 1 ? 'Finish ✓' : 'Next →';
+
+  // Focus input if applicable
+  setTimeout(() => {
+    const inp = document.getElementById('short-input') || document.getElementById('open-input');
+    if (inp) inp.focus();
+  }, 80);
+}
+
+function showReadingPrompt() {
+  document.getElementById('current-q-num').textContent = '16';
+  document.getElementById('current-section').textContent = 'English · Reading';
+  document.getElementById('progress-fill').style.width = `${(STATE.currentIndex / QUESTIONS.length) * 100}%`;
+
+  let html = `<div class="question-card">`;
+  html += `<div class="section-tag">English · Reading</div>`;
+  html += `<h2 style="margin-bottom: 12px;">Reading Time</h2>`;
+  html += `<div class="read-prompt-card">`;
+  html += `<p><strong>You are about to read a short story.</strong> Read it carefully — you will then answer some questions about it.</p>`;
+  html += `<p>When you're ready, press <strong>Start Reading</strong>. Press <strong>I have finished reading</strong> when you're done.</p>`;
+  html += `</div>`;
+  html += `<div style="text-align: center; margin-top: 20px;">`;
+  html += `<button class="btn large" onclick="beginReading()">📖 Start Reading</button>`;
+  html += `</div>`;
+  html += `</div>`;
+
+  document.getElementById('question-area').innerHTML = html;
+  document.getElementById('prev-btn').style.display = 'inline-flex';
+  document.getElementById('next-btn').style.display = 'none';
+}
+
+function beginReading() {
+  STATE.readingStartTime = Date.now();
+  let html = `<div class="question-card">`;
+  html += `<div class="section-tag">English · Reading</div>`;
+  html += `<div class="reading-passage">${READING_PASSAGE}</div>`;
+  html += `<div style="text-align: center; margin-top: 24px;">`;
+  html += `<button class="btn large" onclick="finishReading()">I have finished reading →</button>`;
+  html += `</div>`;
+  html += `</div>`;
+  document.getElementById('question-area').innerHTML = html;
+}
+
+function finishReading() {
+  STATE.readingTime = Date.now() - STATE.readingStartTime;
+  saveState();
+  document.getElementById('next-btn').style.display = 'inline-flex';
+  renderQuestion();
+}
+
+// ============================================================================
+// RESPONSE RECORDING
+// ============================================================================
+function selectOption(idx) {
+  const q = QUESTIONS[STATE.currentIndex];
+  recordResponse(q.id, idx);
+  document.querySelectorAll('.option').forEach((o, i) => {
+    o.classList.toggle('selected', i === idx);
+  });
+}
+
+function recordShortAnswer(value) {
+  const q = QUESTIONS[STATE.currentIndex];
+  recordResponse(q.id, value);
+}
+
+function recordResponse(qId, answer) {
+  const prev = STATE.responses[qId];
+  if (prev && prev.answer !== answer) {
+    STATE.answerChanges[qId] = (STATE.answerChanges[qId] || 0) + 1;
+  }
+  STATE.responses[qId] = {
+    answer,
+    timestamp: new Date().toISOString()
+  };
+  saveState();
+}
+
+function recordTimeOnQuestion() {
+  if (!STATE.questionStartTime) return;
+  const q = QUESTIONS[STATE.currentIndex];
+  if (!q) return;
+  const elapsed = Date.now() - STATE.questionStartTime;
+  STATE.questionTimes[q.id] = (STATE.questionTimes[q.id] || 0) + elapsed;
+}
+
+// ============================================================================
+// NAVIGATION
+// ============================================================================
+function nextQuestion() {
+  recordTimeOnQuestion();
+  if (STATE.currentIndex >= QUESTIONS.length - 1) {
+    finishAssessment();
+    return;
+  }
+  STATE.currentIndex++;
+  saveState();
+  renderQuestion();
+}
+
+function previousQuestion() {
+  recordTimeOnQuestion();
+  if (STATE.currentIndex === 0) return;
+  STATE.currentIndex--;
+  saveState();
+  renderQuestion();
+}
+
+function resumeFromPause() { renderQuestion(); }
+
+// ============================================================================
+// ESCAPE / UTILITY
+// ============================================================================
+function escapeHtml(s) {
+  if (s == null) return '';
+  return String(s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+function normaliseAnswer(s) {
+  return String(s || '').trim().toLowerCase().replace(/[\s,£$g€]+/g, '').replace(/cm|kg|mm|ml|l\b/gi, '');
+}
+
+// ============================================================================
+// FINISH & SCORE
+// ============================================================================
+function forceFinish(reason) {
+  alert(reason + ' The assessment will now end.');
+  finishAssessment();
+}
+
+function finishAssessment() {
+  if (STATE.timerInterval) clearInterval(STATE.timerInterval);
+  recordTimeOnQuestion();
+  STATE.finishedAt = new Date().toISOString();
+  saveState();
+
+  // Compute auto-marked score
+  let autoMarked = 0, autoMaxMarks = 0;
+  let answered = 0;
+  QUESTIONS.forEach(q => {
+    const r = STATE.responses[q.id];
+    if (r && (r.answer !== '' && r.answer !== null && r.answer !== undefined)) answered++;
+    if (q.type === 'mcq' || q.type === 'reading-passage-mcq') {
+      autoMaxMarks++;
+      if (r && r.answer === q.correct) autoMarked++;
+    } else if (q.type === 'short') {
+      autoMaxMarks++;
+      if (r && q.accept) {
+        const norm = normaliseAnswer(r.answer);
+        if (q.accept.some(a => normaliseAnswer(a) === norm)) autoMarked++;
+      }
+    }
+  });
+
+  const totalSec = STATE.startedAt ? Math.floor((new Date(STATE.finishedAt) - new Date(STATE.startedAt)) / 1000) : 0;
+  const m = Math.floor(totalSec / 60), s = totalSec % 60;
+  document.getElementById('summary-time').textContent = `${m} min ${s}s`;
+  document.getElementById('summary-answered').textContent = `${answered} / ${QUESTIONS.length}`;
+  document.getElementById('summary-score').textContent = `${autoMarked} / ${autoMaxMarks}`;
+
+  show('completion-screen');
+}
+
+// ============================================================================
+// RESULTS DOWNLOAD
+// ============================================================================
+function buildResultsObject() {
+  const totalSec = STATE.startedAt && STATE.finishedAt
+    ? Math.floor((new Date(STATE.finishedAt) - new Date(STATE.startedAt)) / 1000) : 0;
+
+  const detailedResponses = QUESTIONS.map(q => {
+    const r = STATE.responses[q.id] || {};
+    let isCorrect = null;
+    let expectedAnswer = null;
+    if (q.type === 'mcq' || q.type === 'reading-passage-mcq') {
+      expectedAnswer = q.options[q.correct];
+      isCorrect = r.answer === q.correct;
+    } else if (q.type === 'short') {
+      expectedAnswer = q.correct;
+      isCorrect = r.answer && q.accept && q.accept.some(a => normaliseAnswer(a) === normaliseAnswer(r.answer));
+    } else {
+      expectedAnswer = '[Manual marking required — see rubric]';
+      isCorrect = null; // manual
+    }
+    let answerDisplay = r.answer;
+    if ((q.type === 'mcq' || q.type === 'reading-passage-mcq') && typeof r.answer === 'number') {
+      answerDisplay = `${String.fromCharCode(65 + r.answer)} — ${q.options[r.answer]}`;
+    }
+
+    return {
+      questionId: q.id,
+      section: q.section,
+      type: q.type,
+      questionText: q.text.replace(/<[^>]+>/g, ''),
+      studentAnswer: answerDisplay !== undefined ? answerDisplay : '[No answer]',
+      expectedAnswer,
+      isCorrect,
+      requiresManualMarking: q.rubric ? q.rubric : null,
+      maxMarks: q.maxMarks || (q.type === 'mcq' || q.type === 'short' || q.type === 'reading-passage-mcq' ? 1 : null),
+      timeOnQuestionMs: STATE.questionTimes[q.id] || 0,
+      answerChanges: STATE.answerChanges[q.id] || 0
+    };
+  });
+
+  return {
+    student: { name: STATE.studentName, class: STATE.studentClass },
+    timing: {
+      startedAt: STATE.startedAt,
+      finishedAt: STATE.finishedAt,
+      totalDurationSeconds: totalSec,
+      readingPassageTimeMs: STATE.readingTime,
+      readingPassageWPM: STATE.readingTime ? Math.round((87 / (STATE.readingTime / 1000)) * 60) : null
+    },
+    summary: {
+      questionsTotal: QUESTIONS.length,
+      questionsAnswered: detailedResponses.filter(r => r.studentAnswer && r.studentAnswer !== '[No answer]').length,
+      autoMarkedCorrect: detailedResponses.filter(r => r.isCorrect === true).length,
+      autoMarkedTotal: detailedResponses.filter(r => r.isCorrect !== null).length,
+      manualMarkingRequired: detailedResponses.filter(r => r.requiresManualMarking).length
+    },
+    responses: detailedResponses
+  };
+}
+
+function downloadResults() {
+  const data = buildResultsObject();
+  const json = JSON.stringify(data, null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
+  triggerDownload(blob, `assessment_${slug(STATE.studentName)}_${dateStamp()}.json`);
+}
+
+function downloadResultsCSV() {
+  const data = buildResultsObject();
+  let csv = 'Question ID,Section,Type,Question,Student Answer,Expected Answer,Auto-Marked Correct,Manual Marking Rubric,Max Marks,Time (sec),Answer Changes\n';
+  data.responses.forEach(r => {
+    const fields = [
+      r.questionId,
+      r.section,
+      r.type,
+      `"${(r.questionText || '').replace(/"/g, '""')}"`,
+      `"${String(r.studentAnswer || '').replace(/"/g, '""')}"`,
+      `"${String(r.expectedAnswer || '').replace(/"/g, '""')}"`,
+      r.isCorrect === null ? 'N/A' : (r.isCorrect ? 'Yes' : 'No'),
+      r.requiresManualMarking || '',
+      r.maxMarks || '',
+      Math.round((r.timeOnQuestionMs || 0) / 1000),
+      r.answerChanges || 0
+    ];
+    csv += fields.join(',') + '\n';
+  });
+  csv += '\n\nSummary\n';
+  csv += `Student,${data.student.name}\n`;
+  csv += `Class,${data.student.class}\n`;
+  csv += `Started,${data.timing.startedAt}\n`;
+  csv += `Finished,${data.timing.finishedAt}\n`;
+  csv += `Total Duration (sec),${data.timing.totalDurationSeconds}\n`;
+  csv += `Reading Time (ms),${data.timing.readingPassageTimeMs || 'N/A'}\n`;
+  csv += `Reading WPM (estimated),${data.timing.readingPassageWPM || 'N/A'}\n`;
+  csv += `Questions Answered,${data.summary.questionsAnswered}/${data.summary.questionsTotal}\n`;
+  csv += `Auto-Marked Score,${data.summary.autoMarkedCorrect}/${data.summary.autoMarkedTotal}\n`;
+  csv += `Manual Marking Required,${data.summary.manualMarkingRequired} questions\n`;
+
+  const blob = new Blob([csv], { type: 'text/csv' });
+  triggerDownload(blob, `assessment_${slug(STATE.studentName)}_${dateStamp()}.csv`);
+}
+
+function triggerDownload(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 100);
+}
+
+function slug(s) { return String(s || 'student').toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, ''); }
+function dateStamp() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+
+function showResults() {
+  const data = buildResultsObject();
+  const target = document.getElementById('detailed-results');
+  let html = `<div class="card">`;
+  html += `<h2>Detailed Responses</h2>`;
+  html += `<p style="margin-top: 8px;">Auto-marked questions show ✅ correct or ❌ incorrect. Open-ended responses are marked <em>"Manual"</em> and require the assessor to apply the rubric.</p>`;
+
+  data.responses.forEach(r => {
+    let badge = '';
+    if (r.isCorrect === true) badge = '<span style="color: var(--success); font-weight: 600;">✅ Correct</span>';
+    else if (r.isCorrect === false) badge = '<span style="color: var(--danger); font-weight: 600;">❌ Incorrect</span>';
+    else badge = `<span style="color: var(--warning); font-weight: 600;">📝 Manual marking (${r.requiresManualMarking})</span>`;
+
+    html += `<div style="border-top: 1px solid var(--line); padding: 18px 0;">`;
+    html += `<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;"><strong>Q${r.questionId}</strong> <span>${badge}</span></div>`;
+    html += `<div style="font-size: 0.9rem; color: var(--ink-soft); margin-bottom: 8px;">${r.section}</div>`;
+    html += `<div style="margin-bottom: 8px;">${r.questionText}</div>`;
+    html += `<div style="background: var(--bg-soft); padding: 12px 16px; border-radius: 8px;"><strong>Answer given:</strong> ${escapeHtml(String(r.studentAnswer))}</div>`;
+    if (r.expectedAnswer && r.expectedAnswer !== '[Manual marking required — see rubric]') {
+      html += `<div style="margin-top: 6px; font-size: 0.9rem; color: var(--ink-soft);"><strong>Expected:</strong> ${escapeHtml(String(r.expectedAnswer))}</div>`;
+    }
+    html += `<div style="margin-top: 6px; font-size: 0.85rem; color: var(--ink-soft);">Time: ${Math.round((r.timeOnQuestionMs || 0) / 1000)}s · Changes: ${r.answerChanges || 0}</div>`;
+    html += `</div>`;
+  });
+
+  html += `</div>`;
+  target.innerHTML = html;
+  target.style.display = 'block';
+}
+
+// ============================================================================
+// AUTO-RESUME (in case browser was closed)
+// ============================================================================
+window.addEventListener('load', () => {
+  // Check for existing in-progress assessment
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const data = JSON.parse(saved);
+      if (data && data.startedAt && !data.finishedAt) {
+        if (confirm(`There is an unfinished assessment for ${data.studentName || 'a student'}. Resume it?`)) {
+          Object.assign(STATE, data);
+          STATE.timerInterval = null;
+          startTimer();
+          show('assessment-screen');
+          renderQuestion();
+        } else {
+          localStorage.removeItem(STORAGE_KEY);
+        }
+      }
+    }
+  } catch (e) { /* ignore */ }
+});
+
+// Save on close/leave
+window.addEventListener('beforeunload', (e) => {
+  if (STATE.startedAt && !STATE.finishedAt) {
+    saveState();
+  }
+});
+</script>
+
+</body>
+</html>
